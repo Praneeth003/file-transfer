@@ -1,3 +1,7 @@
+import React from 'react';
+import { useState } from 'react';
+import Sender from './sender/page';
+import Receiver from './receiver/page';
 
 const Page = () => {
   return (
