@@ -1,34 +1,53 @@
-// import react from 'react';
-// import { useState } from 'react';
-
-// import SimplePeer from 'simple-peer';
-
-// console.log('Peer1->');
-
-// const peer1 = new SimplePeer({ initiator: location.hash === '#1', trickle: false });
-
-// peer1.on('signal', data => {
-//     console.log('Peer1->', JSON.stringify(data));
-// });
-
-// peer1.on('connect', () => {
-//     console.log('Peer1->', 'CONNECT');
-//     peer1.send('Peer 1 sending a message');
-// }
-// );
-
-// peer1.on('data', data => {
-//     console.log('Peer1->', 'Received', data);
-// }
-// );
-
-import react from 'react';
+"use client";
+import React from 'react';
 import { useState } from 'react';
+import SimplePeer from 'simple-peer';
+
 export default function Sender() {
-    console.log('Peer1');
+    const [message,setMessage] = useState('');
+    const [peer, setPeer] = useState<SimplePeer.Instance | null>(null);
+    const [receiverSignal, setReceiverSignal] = useState<RTCSessionDescriptionInit | null>(null);
+
+    const sendMessage = () => {
+        if (peer && (peer as SimplePeer.Instance & { _channel?: RTCDataChannel })._channel?.readyState === 'open') {
+            console.log('Sending message:', message);
+            peer.send(message);
+            setMessage('');
+        }else{
+            console.log('Peer connection is not established yet or not ready for sending messages');
+        }
+    };
+
+    const initializePeer = () => {
+        const newPeer = new SimplePeer({ initiator: true, trickle: false });
+        
+        newPeer.on('signal', data => {
+            console.log('Send this signal to the receiver: ', data);
+            setReceiverSignal(JSON.stringify(data));
+            console.log('Send this signal to the receiver: ', receiverSignal);
+        });
+        newPeer.on('connect', () => {
+            console.log('Peer connection established.');
+        });
+
+        setPeer(newPeer as SimplePeer.Instance);
+    };
+
+
+
     return (
         <div>
-            <h1>Sender</h1>       
+            <h1>Sender</h1>
+            <input
+            type="text"
+            value={message}
+            onChange={e => setMessage(e.target.value)}
+            placeholder="Type your message..."
+            />
+            <button onClick={sendMessage}>Send</button>
+            <button onClick={initializePeer}>Initialize Peer</button>                 
         </div>
     );
-}
+};
+
+
