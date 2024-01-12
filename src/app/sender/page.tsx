@@ -4,20 +4,9 @@ import { useState } from 'react';
 import SimplePeer from 'simple-peer';
 
 export default function Sender() {
-    const [message, setMessage] = useState('');
     const [peer, setPeer] = useState<SimplePeer.Instance | null>(null);
-    // const [receiverSignal, setReceiverSignal] = useState<RTCSessionDescriptionInit | null>(null);
     const [receivedSignal, setReceivedSignal] = useState('');
-
-    const sendMessage = () => {
-        if (peer && (peer as SimplePeer.Instance & { _channel?: RTCDataChannel })._channel?.readyState === 'open') {
-            console.log('Sending message:', message);
-            peer.send(message);
-            setMessage('');
-        } else {
-            console.log('Peer connection is not established yet or not ready for sending messages');
-        }
-    };
+    const [file, setFile] = useState<File | null>(null);
 
     const initializePeer = () => {
         try {
@@ -25,8 +14,6 @@ export default function Sender() {
 
             newPeer.on('signal', data => {
                 console.log('Send this signal to the receiver: ', JSON.stringify(data));
-                // setReceiverSignal(JSON.stringify(data));
-                // console.log('Send this signal to the receiver: ', receiverSignal);
             });
 
             setPeer(newPeer);
@@ -36,20 +23,56 @@ export default function Sender() {
     };
 
     const handleReceivedSignal = () => {
-        const parsedSignal = JSON.parse(receivedSignal);
-        
-        if (peer) {
-            peer.signal(parsedSignal);
+        try {
+            const parsedSignal = JSON.parse(receivedSignal);
+            console.log('Parsed signal:', parsedSignal);
+            if (peer && parsedSignal) {
+                peer.signal(parsedSignal);
+            }
+        } catch (error) {
+            console.error('Error parsing received signal:', error);
+        }
+    };
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files && event.target.files.length > 0) {
+            setFile(event.target.files[0]);
+        }
+    };
+
+    const sendFile = () => {
+        if (peer && file) {
+            const CHUNK_SIZE = 1024 * 1024;
+            let offset = 0;
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                if (event.target && event.target.result) {
+                    peer.send(event.target.result as ArrayBuffer);
+
+                    offset += CHUNK_SIZE;
+
+                    if (offset < file.size) {
+                        reader.readAsArrayBuffer(file.slice(offset, offset + CHUNK_SIZE));
+                    } else {
+                        console.log('File transfer complete.');
+                    }
+                }
+            };
+
+            reader.readAsArrayBuffer(file.slice(0, CHUNK_SIZE));
+        } else {
+            console.log('Select a file and initialize peer connection before sending.');
         }
     };
 
     return (
         <div>
-            <input value={message} onChange={(e) => setMessage(e.target.value)} type="text" placeholder="Type a message" />
-            <button onClick={sendMessage}>Send Message</button>
             <button onClick={initializePeer}>Initialize Peer</button>
             <input value={receivedSignal} onChange={(e) => setReceivedSignal(e.target.value)} type="text" placeholder="Paste received signal here" />
             <button onClick={handleReceivedSignal}>Submit Received Signal</button>
+            <input type="file" onChange={handleFileChange} />
+            <button onClick={sendFile}>Send File</button>
         </div>
     );
 }

@@ -5,49 +5,35 @@ import SimplePeer from 'simple-peer';
 const Receiver = () => {
     const [receivedSignal, setReceivedSignal] = useState('');
     const [peer, setPeer] = useState<SimplePeer.Instance | null>(null);
-    const [receivedMessage, setReceivedMessage] = useState('');
+    const [receivedFile, setReceivedFile] = useState<Blob | null>(null);
 
-    // Function to handle receiving the sender's signal and initiating the peer connection
     const handleReceivedSignal = () => {
-          try {
+        try {
             const parsedSignal = JSON.parse(receivedSignal);
             console.log('Parsed signal:', parsedSignal);
 
             const newPeer = new SimplePeer({ trickle: false });
-           
 
-            // Set the signal received from the sender
-            newPeer.signal(parsedSignal);
-
-            newPeer.on('signal', (data) => {
-                // Convert the signal data to a string and log it
-                const signalDataString = JSON.stringify(data);
-                console.log('Signal data:', signalDataString);
+            newPeer.on('signal', data => {
+                console.log('Receiver: Send this signal to the sender: ', JSON.stringify(data));
             });
 
-            // Listener for when the peer connection is established
+            let receivedFile = new Blob([]);
+
+            newPeer.on('data', data => {
+                // Append each chunk to the received file
+                receivedFile = new Blob([receivedFile, data]);
+
+                // Handle progress or any other logic
+                console.log('Received data chunk, current file size:', receivedFile.size);
+            });
+
             newPeer.on('connect', () => {
                 console.log('Receiver: Peer connection established.');
             });
 
-            // Listener for when a message is received from the sender
-            newPeer.on('data', (data) => {
-                 console.log('Received data:', data.toString());
-                setReceivedMessage(data.toString());
-            });
-
-            newPeer.on('error', (err) => {
-                console.error('Error in peer connection:', err);
-                // Handle the error appropriately
-                newPeer.destroy();
-            });
-
-            newPeer.on('close', () => {
-                console.log('Peer connection closed.');
-                // Handle the close event if needed
-            });
-
             setPeer(newPeer);
+            newPeer.signal(parsedSignal);
         } catch (error) {
             console.error('Error parsing received signal:', error);
         }
@@ -66,11 +52,13 @@ const Receiver = () => {
             />
             <button onClick={handleReceivedSignal}>Receive Signal</button>
 
-            {/* Display the received message */}
-            <div>
-                <h3>Received Message:</h3>
-                <p>{receivedMessage}</p>
-            </div>
+            {/* Display the received file */}
+            {receivedFile && (
+                <div>
+                    <h3>Received File:</h3>
+                    <a href={URL.createObjectURL(receivedFile)} download="received_file">Download Received File</a>
+                </div>
+            )}
         </div>
     );
 };
