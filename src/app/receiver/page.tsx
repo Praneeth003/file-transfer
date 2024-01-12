@@ -20,7 +20,9 @@ const Receiver = () => {
             newPeer.signal(parsedSignal);
 
             newPeer.on('signal', (data) => {
-                console.log('Signal data:', data);
+                // Convert the signal data to a string and log it
+                const signalDataString = JSON.stringify(data);
+                console.log('Signal data:', signalDataString);
             });
 
             // Listener for when the peer connection is established
@@ -30,7 +32,7 @@ const Receiver = () => {
 
             // Listener for when a message is received from the sender
             newPeer.on('data', (data) => {
-                 console.log('Received data:', data);
+                 console.log('Received data:', data.toString());
                 setReceivedMessage(data.toString());
             });
 
