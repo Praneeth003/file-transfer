@@ -13,14 +13,15 @@ const Receiver = () => {
             const parsedSignal = JSON.parse(receivedSignal);
             console.log('Parsed signal:', parsedSignal);
 
-            const newPeer = new SimplePeer({ initiator: false, trickle: false });
+            const newPeer = new SimplePeer({ trickle: false });
+           
+
+            // Set the signal received from the sender
+            newPeer.signal(parsedSignal);
 
             newPeer.on('signal', (data) => {
                 console.log('Signal data:', data);
             });
-
-            // Set the signal received from the sender
-            newPeer.signal(parsedSignal);
 
             // Listener for when the peer connection is established
             newPeer.on('connect', () => {
@@ -29,7 +30,19 @@ const Receiver = () => {
 
             // Listener for when a message is received from the sender
             newPeer.on('data', (data) => {
+                 console.log('Received data:', data);
                 setReceivedMessage(data.toString());
+            });
+
+            newPeer.on('error', (err) => {
+                console.error('Error in peer connection:', err);
+                // Handle the error appropriately
+                newPeer.destroy();
+            });
+
+            newPeer.on('close', () => {
+                console.log('Peer connection closed.');
+                // Handle the close event if needed
             });
 
             setPeer(newPeer);

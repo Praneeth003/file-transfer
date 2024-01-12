@@ -19,20 +19,29 @@ export default function Sender() {
     };
 
     const initializePeer = () => {
-        const newPeer = new SimplePeer({ initiator: true, trickle: false });
-        
-        newPeer.on('signal', data => {
-            console.log('Send this signal to the receiver: ', data);
-            setReceiverSignal(JSON.stringify(data));
-            console.log('Send this signal to the receiver: ', receiverSignal);
-        });
-        newPeer.on('connect', () => {
-            console.log('Peer connection established.');
-        });
+        try{
+            const newPeer = new SimplePeer({ initiator: true, trickle: false });
+            
+            newPeer.on('signal', data => {
+                console.log('Send this signal to the receiver: ', data);
+                setReceiverSignal(JSON.stringify(data));
+                console.log('Send this signal to the receiver: ', receiverSignal);
+            });
+            newPeer.on('connect', () => {
+                console.log('Peer connection established.');
+            });
 
-        setPeer(newPeer as SimplePeer.Instance);
+            setPeer((prevPeer) => {
+            // Use the previous peer state to ensure correct updating
+            if (prevPeer) {
+                prevPeer.destroy();
+            }
+            return newPeer as SimplePeer.Instance;
+            });
+        }catch(error){
+            console.error('Error in peer connection:', error);
+        }
     };
-
 
 
     return (
