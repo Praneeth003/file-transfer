@@ -1,12 +1,17 @@
 import React from 'react';
-import { useState } from 'react';
-import Sender from './sender/page';
-import Receiver from './receiver/page';
+import Link from 'next/link';
+import Button from '@mui/material/Button';
 
 const Page = () => {
   return (
     <div>
-      <h1>Home Page</h1>
+      <h1>File Transfer</h1>
+      <Link href="/sender">
+      <Button variant="contained" size = "large" >Sender</Button>
+      </Link>
+      <Link href="/receiver">
+      <Button variant="contained" size = "large" >Receiver</Button>
+      </Link>
     </div>
   );
 };
