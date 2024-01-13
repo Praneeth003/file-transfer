@@ -6,6 +6,7 @@ const Receiver = () => {
     const [receivedSignal, setReceivedSignal] = useState('');
     const [peer, setPeer] = useState<SimplePeer.Instance | null>(null);
     const [receivedFile, setReceivedFile] = useState<Blob | null>(null);
+    const [fileName, setFileName] = useState<string | null>(null);
 
     const handleReceivedSignal = () => {
         try {
@@ -19,13 +20,23 @@ const Receiver = () => {
             });
 
             let receivedFile = new Blob([]);
+            let fileInfoReceived = false;
 
             newPeer.on('data', data => {
-                // Append each chunk to the received file
-                receivedFile = new Blob([receivedFile, data]);
+                if (!fileInfoReceived) {
+                    const fileInfo = JSON.parse(new TextDecoder().decode(data));
+                    setFileName(fileInfo.name);
+                    fileInfoReceived = true;
+                } else {
+                    // Append each chunk to the received file
+                    receivedFile = new Blob([receivedFile, data]);
 
-                // Handle progress or any other logic
-                console.log('Received data chunk, current file size:', receivedFile.size);
+                    // Handle progress or any other logic
+                    console.log('Received data chunk, current file size:', receivedFile.size);
+
+                    // Update the receivedFile state
+                    setReceivedFile(receivedFile);
+                }
             });
 
             newPeer.on('connect', () => {
@@ -53,10 +64,10 @@ const Receiver = () => {
             <button onClick={handleReceivedSignal}>Receive Signal</button>
 
             {/* Display the received file */}
-            {receivedFile && (
+            {receivedFile && fileName && (
                 <div>
                     <h3>Received File:</h3>
-                    <a href={URL.createObjectURL(receivedFile)} download="received_file">Download Received File</a>
+                    <a href={URL.createObjectURL(receivedFile)} download={fileName}>Download Received File</a>
                 </div>
             )}
         </div>

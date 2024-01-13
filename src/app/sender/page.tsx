@@ -48,6 +48,11 @@ export default function Sender() {
 
             reader.onload = (event) => {
                 if (event.target && event.target.result) {
+
+                    // Send file info (name and type) before sending the file data
+                    if (offset === 0) {
+                    peer.send(JSON.stringify({ name: file.name, type: file.type }));
+                }
                     peer.send(event.target.result as ArrayBuffer);
 
                     offset += CHUNK_SIZE;
