@@ -43,7 +43,7 @@ const Receiver = () => {
         <div>
             <h1>Receiver</h1>
 
-            {/* Assuming you have an input for pasting the sender's signal */}
+            {/* Assuming there is an input for pasting the sender's signal */}
             <input
                 type="text"
                 value={receivedSignal}

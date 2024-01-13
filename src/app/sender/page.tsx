@@ -42,7 +42,7 @@ export default function Sender() {
 
     const sendFile = () => {
         if (peer && file) {
-            const CHUNK_SIZE = 1024 * 1024;
+            const CHUNK_SIZE = 16384;
             let offset = 0;
             const reader = new FileReader();
 
