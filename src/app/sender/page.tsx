@@ -14,6 +14,7 @@ export default function Sender() {
 
             newPeer.on('signal', data => {
                 console.log('Send this signal to the receiver: ', JSON.stringify(data));
+                const sendOffer = JSON.stringify(data);
             });
 
             setPeer(newPeer);
@@ -46,6 +47,9 @@ export default function Sender() {
             let offset = 0;
             const reader = new FileReader();
 
+            // Record the start time
+            const startTime = Date.now();
+
             reader.onload = (event) => {
                 if (event.target && event.target.result) {
 
@@ -60,7 +64,10 @@ export default function Sender() {
                     if (offset < file.size) {
                         reader.readAsArrayBuffer(file.slice(offset, offset + CHUNK_SIZE));
                     } else {
-                        console.log('File transfer complete.');
+                        // Record the end time and calculate the difference
+                        const endTime = Date.now();
+                        const timeTaken = (endTime - startTime) / 1000; // in seconds
+                        console.log(`File transfer complete. Time taken: ${timeTaken} seconds.`);
                     }
                 }
             };
@@ -73,7 +80,8 @@ export default function Sender() {
 
     return (
         <div>
-            <button onClick={initializePeer}>Initialize Peer</button>
+            <button onClick={initializePeer}>Send Offer to the Receiver</button>
+            
             <input value={receivedSignal} onChange={(e) => setReceivedSignal(e.target.value)} type="text" placeholder="Paste received signal here" />
             <button onClick={handleReceivedSignal}>Submit Received Signal</button>
             <input type="file" onChange={handleFileChange} />
