@@ -6,12 +6,31 @@ const Page = () => {
   return (
     <div>
       <h1>File Transfer</h1>
+      <div id='inside-div'>
       <Link href="/sender">
-      <Button variant="contained" size = "large" >Sender</Button>
+      <Button variant="outlined" size = "large" color='primary' 
+            sx={{ 
+              borderColor: '#000000', 
+              color: '#000000',
+              fontWeight: 'bold',
+              fontSize: '1.5rem',
+              fontFamily: 'Trebuchet MS' 
+            }} >
+        Sender
+        </Button>
       </Link>
       <Link href="/receiver">
-      <Button variant="contained" size = "large" >Receiver</Button>
+      <Button variant="outlined" size = "large" color='primary' 
+            sx={{ 
+              borderColor: '#000000', 
+              color: '#000000',
+              fontWeight: 'bold',
+              fontSize: '1.5rem',
+              fontFamily: 'Trebuchet MS' 
+            }} >
+            Receiver</Button>
       </Link>
+      </div>
     </div>
   );
 };
