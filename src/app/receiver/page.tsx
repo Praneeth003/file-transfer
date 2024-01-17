@@ -7,6 +7,7 @@ const Receiver = () => {
     const [peer, setPeer] = useState<SimplePeer.Instance | null>(null);
     const [receivedFile, setReceivedFile] = useState<Blob | null>(null);
     const [fileName, setFileName] = useState<string | null>(null);
+    const [answerSignal, setAnswerSignal] = useState('');
 
     const handleReceivedSignal = () => {
         try {
@@ -17,6 +18,7 @@ const Receiver = () => {
 
             newPeer.on('signal', data => {
                 console.log('Receiver: Send this signal to the sender: ', JSON.stringify(data));
+                setAnswerSignal(JSON.stringify(data));
             });
 
             let receivedFile = new Blob([]);
@@ -54,7 +56,6 @@ const Receiver = () => {
         <div>
             <h1>Receiver</h1>
 
-            {/* Assuming there is an input for pasting the sender's signal */}
             <input
                 type="text"
                 value={receivedSignal}
@@ -63,9 +64,13 @@ const Receiver = () => {
             />
             <button onClick={handleReceivedSignal}>Receive Signal</button>
 
+            <input type='text' value = {answerSignal} placeholder='Answer signal from receiver' ></input>
+            
+            
+
             {/* Display the received file */}
             {receivedFile && fileName && (
-                <div>
+                <div id='recv-out'>
                     <h3>Received File:</h3>
                     <a href={URL.createObjectURL(receivedFile)} download={fileName}>Download Received File</a>
                 </div>

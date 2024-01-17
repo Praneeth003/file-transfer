@@ -2,19 +2,23 @@
 import React from 'react';
 import { useState } from 'react';
 import SimplePeer from 'simple-peer';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import { Box } from '@mui/material';
 
 export default function Sender() {
     const [peer, setPeer] = useState<SimplePeer.Instance | null>(null);
     const [receivedSignal, setReceivedSignal] = useState('');
     const [file, setFile] = useState<File | null>(null);
+    const [sendOffer, setSendOffer] = useState('');
 
     const initializePeer = () => {
         try {
             const newPeer = new SimplePeer({ initiator: true, trickle: false });
 
             newPeer.on('signal', data => {
-                console.log('Send this signal to the receiver: ', JSON.stringify(data));
-                const sendOffer = JSON.stringify(data);
+                setSendOffer(JSON.stringify(data));
+                // console.log('Send this signal to the receiver: ', sendOffer);
             });
 
             setPeer(newPeer);
@@ -79,13 +83,16 @@ export default function Sender() {
     };
 
     return (
-        <div>
-            <button onClick={initializePeer}>Send Offer to the Receiver</button>
-            
+        <Box id = 'inside-sender-div'>
+            <h1>SENDER </h1>
+            <Button onClick={initializePeer} variant= 'outlined'>Initiate Peer Connection</Button>
+
+            <input value = {sendOffer} />
+
             <input value={receivedSignal} onChange={(e) => setReceivedSignal(e.target.value)} type="text" placeholder="Paste received signal here" />
             <button onClick={handleReceivedSignal}>Submit Received Signal</button>
             <input type="file" onChange={handleFileChange} />
             <button onClick={sendFile}>Send File</button>
-        </div>
+        </Box>
     );
 }

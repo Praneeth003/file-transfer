@@ -10,7 +10,7 @@ const Page = () => {
       <Link href="/sender">
       <Button variant="outlined" size = "large" color='primary' 
             sx={{ 
-              borderColor: '#000000', 
+              borderColor: 'blue', 
               color: '#000000',
               fontWeight: 'bold',
               fontSize: '1.5rem',
@@ -22,7 +22,7 @@ const Page = () => {
       <Link href="/receiver">
       <Button variant="outlined" size = "large" color='primary' 
             sx={{ 
-              borderColor: '#000000', 
+              borderColor: 'blue', 
               color: '#000000',
               fontWeight: 'bold',
               fontSize: '1.5rem',
