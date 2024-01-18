@@ -82,15 +82,29 @@ export default function Sender() {
         }
     };
 
+    const copyToClipboard = async () => {
+        try{
+            await navigator.clipboard.writeText(sendOffer);
+            console.log('Offer copied to clipboard');
+        } catch (error) {
+            console.error('Error copying offer to clipboard:', error);
+        }
+    };
+
     return (
         <Box id = 'inside-sender-div'>
             <h1>SENDER </h1>
             <Button onClick={initializePeer} variant= 'outlined'>Initiate Peer Connection</Button>
 
-            <input value = {sendOffer} />
+            <label htmlFor = "sendOffer">Copy the Offer and send it to the Receiver</label>
+            <textarea value={sendOffer} id="sendOffer"></textarea>
+            <button onClick={copyToClipboard}>Copy to Clipboard</button>
 
-            <input value={receivedSignal} onChange={(e) => setReceivedSignal(e.target.value)} type="text" placeholder="Paste received signal here" />
+
+            <label htmlFor="receivedSignal">Paste the Answer from the Receiver</label>
+            <input value={receivedSignal} onChange={(e) => setReceivedSignal(e.target.value)} type="text" placeholder="Paste received signal here" id = "receivedSiganl"/>
             <button onClick={handleReceivedSignal}>Submit Received Signal</button>
+
             <input type="file" onChange={handleFileChange} />
             <button onClick={sendFile}>Send File</button>
         </Box>
