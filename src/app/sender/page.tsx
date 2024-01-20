@@ -92,21 +92,42 @@ export default function Sender() {
     };
 
     return (
-        <Box id = 'inside-sender-div'>
-            <h1>SENDER </h1>
+        <div>
+            <h1>Sender</h1>
             <Button onClick={initializePeer} variant= 'outlined'>Initiate Peer Connection</Button>
 
+            
             <label htmlFor = "sendOffer">Copy the Offer and send it to the Receiver</label>
             <textarea value={sendOffer} id="sendOffer"></textarea>
-            <button onClick={copyToClipboard}>Copy to Clipboard</button>
+            <Button onClick={copyToClipboard} variant='outlined'>Copy to Clipboard</Button>
 
 
             <label htmlFor="receivedSignal">Paste the Answer from the Receiver</label>
-            <input value={receivedSignal} onChange={(e) => setReceivedSignal(e.target.value)} type="text" placeholder="Paste received signal here" id = "receivedSiganl"/>
-            <button onClick={handleReceivedSignal}>Submit Received Signal</button>
+            <textarea 
+            value={receivedSignal} 
+            onChange={(e) => setReceivedSignal(e.target.value)}  
+            id = "receivedSiganl">
+            </textarea>
+            <Button onClick={handleReceivedSignal} variant='outlined'>Submit Received Signal</Button>
 
-            <input type="file" onChange={handleFileChange} />
-            <button onClick={sendFile}>Send File</button>
-        </Box>
+            {/* <label htmlFor="file">Select a file to send</label>
+            <input type="file" onChange={handleFileChange}/> */}
+
+            <label htmlFor="file">Select a file to send</label>
+            <Button 
+            variant="outlined" 
+            component="label" // Make the Button act as a label
+            >
+            Upload File
+            <input 
+                type="file" 
+                hidden // Hide the default file input
+                onChange={handleFileChange} 
+            />
+            </Button>
+            <p>Selected file: {file?.name}</p>
+
+            <Button onClick={sendFile} variant='outlined'>Send File</Button>
+        </div>
     );
 }

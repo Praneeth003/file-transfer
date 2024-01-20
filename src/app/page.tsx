@@ -5,28 +5,38 @@ import Button from '@mui/material/Button';
 const Page = () => {
   return (
     <div>
-      <h1>File Transfer</h1>
+      <h1 id='homeH1'>File Transfer</h1>
       <div id='inside-div'>
       <Link href="/sender">
-      <Button variant="outlined" size = "large" color='primary' 
+      <Button variant="outlined" size = "large"  
             sx={{ 
-              borderColor: 'blue', 
+              borderColor: 'black', 
               color: '#000000',
               fontWeight: 'bold',
               fontSize: '1.5rem',
-              fontFamily: 'Trebuchet MS' 
+              fontFamily: 'Trebuchet MS',
+              textTransform: 'capitalize',
+              '&:hover': { 
+                  backgroundColor: 'gray',
+                  color: '#ffffff',
+                }, 
             }} >
         Sender
         </Button>
       </Link>
       <Link href="/receiver">
-      <Button variant="outlined" size = "large" color='primary' 
+      <Button variant="outlined" size = "large"  
             sx={{ 
-              borderColor: 'blue', 
+              borderColor: 'black', 
               color: '#000000',
               fontWeight: 'bold',
               fontSize: '1.5rem',
-              fontFamily: 'Trebuchet MS' 
+              fontFamily: 'Trebuchet MS',
+              textTransform: 'capitalize',
+              '&:hover': { 
+                  backgroundColor: 'gray',
+                  color: '#ffffff',
+                }, 
             }} >
             Receiver</Button>
       </Link>
