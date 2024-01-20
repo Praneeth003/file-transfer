@@ -189,4 +189,19 @@ Box{
   border-radius: 10px;
   margin: 0.5rem;
 }
+
+Box{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80%;
+  width: 90%;
+  gap: 1rem;
+  background-color: #ffffff;
+  border: 2px solid gray;
+  padding: 0.5rem;
+  border-radius: 10px;
+  margin: 0.5rem;
+}
  

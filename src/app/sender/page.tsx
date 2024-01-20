@@ -3,8 +3,11 @@ import React from 'react';
 import { useState } from 'react';
 import SimplePeer from 'simple-peer';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import { Box } from '@mui/material';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Item from '@mui/material/ListItem';
 
 export default function Sender() {
     const [peer, setPeer] = useState<SimplePeer.Instance | null>(null);
@@ -92,16 +95,22 @@ export default function Sender() {
     };
 
     return (
-        <div>
+        <Box>
             <h1>Sender</h1>
-            <Button onClick={initializePeer} variant= 'outlined'>Initiate Peer Connection</Button>
+            <Stack spacing={2}>
 
-            
+            <Item>
+            <Button onClick={initializePeer} variant= 'outlined'>Initiate Peer Connection</Button>
+            </Item>
+
+            <Item>
             <label htmlFor = "sendOffer">Copy the Offer and send it to the Receiver</label>
             <textarea value={sendOffer} id="sendOffer"></textarea>
             <Button onClick={copyToClipboard} variant='outlined'>Copy to Clipboard</Button>
+            </Item>
 
 
+            <Item>
             <label htmlFor="receivedSignal">Paste the Answer from the Receiver</label>
             <textarea 
             value={receivedSignal} 
@@ -109,25 +118,29 @@ export default function Sender() {
             id = "receivedSiganl">
             </textarea>
             <Button onClick={handleReceivedSignal} variant='outlined'>Submit Received Signal</Button>
+            </Item>
 
             {/* <label htmlFor="file">Select a file to send</label>
             <input type="file" onChange={handleFileChange}/> */}
 
+            <Item>
             <label htmlFor="file">Select a file to send</label>
             <Button 
             variant="outlined" 
             component="label" // Make the Button act as a label
             >
-            Upload File
+            <AttachFileIcon fontSize = "small" /> File
             <input 
                 type="file" 
                 hidden // Hide the default file input
                 onChange={handleFileChange} 
             />
             </Button>
-            <p>Selected file: {file?.name}</p>
+            {file && <p>Selected file: {file.name}</p>}
+            </Item>
 
-            <Button onClick={sendFile} variant='outlined'>Send File</Button>
-        </div>
+            <Button onClick={sendFile} variant='outlined'><FileUploadIcon/>Send File</Button>
+            </Stack>
+        </Box>
     );
 }

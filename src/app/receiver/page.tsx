@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import SimplePeer from 'simple-peer';
+import Button from '@mui/material/Button';
 
 const Receiver = () => {
     const [receivedSignal, setReceivedSignal] = useState('');
@@ -67,18 +68,22 @@ const Receiver = () => {
             <h1>Receiver</h1>
 
             <label htmlFor="receive Offer">Paste the Offer sent by the Sender</label>
-            <input
-                type="text"
+            <textarea
                 id = "receive Offer"
                 value={receivedSignal}
                 onChange={(e) => setReceivedSignal(e.target.value)}
                 placeholder="Offer signal from sender..."
-            />
-            <button onClick={handleReceivedSignal}>Submit the Offer Signal from the Sender</button>
+            >
+            </textarea>
+            <Button onClick={handleReceivedSignal} variant= 'outlined'>Submit the Offer Signal from the Sender</Button>
 
             <label htmlFor="answer-signal">Copy the Answer and send it to the Sender</label>
-            <input type='text' value = {answerSignal} placeholder='Answer signal from receiver' id='answer-signal' />
-            <button onClick={copyToClipboard}>Copy to Clipboard</button>
+            <textarea 
+            value = {answerSignal} 
+            placeholder='Answer signal from receiver' 
+            id='answer-signal'>
+            </textarea>
+            <Button onClick={copyToClipboard} variant= 'outlined'>Copy to Clipboard</Button>
             
 
             {/* Display the received file */}
