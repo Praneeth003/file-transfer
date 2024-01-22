@@ -2,6 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import SimplePeer from 'simple-peer';
 import Button from '@mui/material/Button';
+import { Box } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Item from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
+import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
+
 
 const Receiver = () => {
     const [receivedSignal, setReceivedSignal] = useState('');
@@ -64,36 +70,44 @@ const Receiver = () => {
 
 
     return (
-        <div>
+        <Box>
             <h1>Receiver</h1>
 
-            <label htmlFor="receive Offer">Paste the Offer sent by the Sender</label>
+            <Stack spacing={2} divider = {<Divider orientation='horizontal' flexItem />}>
+
+            <Item>
+            <p style={{ fontFamily: 'Trebuchet MS', marginRight: '10px', fontSize: '1rem' }}>The Offer signal sent by the Sender:</p>
             <textarea
                 id = "receive Offer"
                 value={receivedSignal}
-                onChange={(e) => setReceivedSignal(e.target.value)}
-                placeholder="Offer signal from sender..."
+                onChange={(e) => setReceivedSignal(e.target.value)}             
             >
             </textarea>
-            <Button onClick={handleReceivedSignal} variant= 'outlined'>Submit the Offer Signal from the Sender</Button>
+            <Button onClick={handleReceivedSignal} className='button-style' variant= 'outlined'>Submit</Button>
+            </Item>
 
-            <label htmlFor="answer-signal">Copy the Answer and send it to the Sender</label>
+            <Item>
+            <p style={{ fontFamily: 'Trebuchet MS', marginRight: '10px', fontSize: '1rem' }}>Send this Answer signal to the Sender:</p>
             <textarea 
-            value = {answerSignal} 
-            placeholder='Answer signal from receiver' 
+            value = {answerSignal}  
             id='answer-signal'>
             </textarea>
-            <Button onClick={copyToClipboard} variant= 'outlined'>Copy to Clipboard</Button>
-            
+            <Button className='button-style' onClick={copyToClipboard} variant= 'outlined'><ContentCopyRoundedIcon/></Button>
+            </Item>
 
             {/* Display the received file */}
+            <Item>
             {receivedFile && fileName && (
-                <div id='recv-out'>
-                    <h3>Received File:</h3>
-                    <a href={URL.createObjectURL(receivedFile)} download={fileName}>Download Received File</a>
-                </div>
+                    <>
+                    <h3 style={{fontFamily: 'Trebuchet MS'}}>Received File:</h3>
+                    <a style={{fontFamily: 'Trebuchet MS', marginLeft: '10px'}} href={URL.createObjectURL(receivedFile)} 
+                    download={fileName}>Download Received File</a>
+                    </>
+
             )}
-        </div>
+            </Item>
+            </Stack>
+        </Box>
     );
 };
 

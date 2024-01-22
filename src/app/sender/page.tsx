@@ -8,6 +8,8 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Item from '@mui/material/ListItem';
+import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
+import Divider from '@mui/material/Divider';
 
 export default function Sender() {
     const [peer, setPeer] = useState<SimplePeer.Instance | null>(null);
@@ -97,37 +99,36 @@ export default function Sender() {
     return (
         <Box>
             <h1>Sender</h1>
-            <Stack spacing={2}>
+            <Stack spacing={2} divider = {<Divider orientation='horizontal' flexItem />}>
 
-            <Item>
-            <Button onClick={initializePeer} variant= 'outlined'>Initiate Peer Connection</Button>
+            <Item>   
+            <Button style={{marginLeft: 0}} className = "button-style" onClick={initializePeer} variant= 'outlined'>Initiate Peer Connection</Button>
             </Item>
 
-            <Item>
-            <label htmlFor = "sendOffer">Copy the Offer and send it to the Receiver</label>
+            <Item>  
+            <p style={{ fontFamily: 'Trebuchet MS', marginRight: '10px', fontSize: '1rem' }}>Send this Offer signal to the Receiver:</p>         
             <textarea value={sendOffer} id="sendOffer"></textarea>
-            <Button onClick={copyToClipboard} variant='outlined'>Copy to Clipboard</Button>
+            <Button className = "button-style" onClick={copyToClipboard} variant='outlined'><ContentCopyRoundedIcon/></Button>
             </Item>
 
 
             <Item>
-            <label htmlFor="receivedSignal">Paste the Answer from the Receiver</label>
+            <p style={{ fontFamily: 'Trebuchet MS', marginRight: '10px', fontSize: '1rem' }}>The Answer signal from the Receiver:</p>
             <textarea 
             value={receivedSignal} 
             onChange={(e) => setReceivedSignal(e.target.value)}  
             id = "receivedSiganl">
             </textarea>
-            <Button onClick={handleReceivedSignal} variant='outlined'>Submit Received Signal</Button>
+            <Button className = "button-style" onClick={handleReceivedSignal} variant='outlined'>Connect</Button>
             </Item>
 
-            {/* <label htmlFor="file">Select a file to send</label>
-            <input type="file" onChange={handleFileChange}/> */}
 
             <Item>
-            <label htmlFor="file">Select a file to send</label>
+            <p style={{ fontFamily: 'Trebuchet MS',marginRight:'10px' }} >Browse File</p>
             <Button 
             variant="outlined" 
-            component="label" // Make the Button act as a label
+            component="label" 
+            className = "button-style"
             >
             <AttachFileIcon fontSize = "small" /> File
             <input 
@@ -136,10 +137,10 @@ export default function Sender() {
                 onChange={handleFileChange} 
             />
             </Button>
-            {file && <p>Selected file: {file.name}</p>}
+            {file && <p style={{fontFamily: 'Trebuchet MS', marginLeft: '10px'}}> {file.name}</p>}
             </Item>
 
-            <Button onClick={sendFile} variant='outlined'><FileUploadIcon/>Send File</Button>
+            <Button className = 'button-style' onClick={sendFile} variant='outlined'><FileUploadIcon/>Send File</Button>
             </Stack>
         </Box>
     );
