@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import Item from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 
 const Receiver = () => {
@@ -99,7 +100,7 @@ const Receiver = () => {
             <Item>
             {receivedFile && fileName && (
                     <>
-                    <h3 style={{fontFamily: 'Trebuchet MS'}}>Received File:</h3>
+                    <p style={{fontFamily: 'Trebuchet MS'}}>Received File:</p>
                     <a style={{fontFamily: 'Trebuchet MS', marginLeft: '10px'}} href={URL.createObjectURL(receivedFile)} 
                     download={fileName}>Download Received File</a>
                     </>

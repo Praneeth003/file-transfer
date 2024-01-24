@@ -38,6 +38,7 @@ export default function Sender() {
             console.log('Parsed signal:', parsedSignal);
             if (peer && parsedSignal) {
                 peer.signal(parsedSignal);
+                console.log('Sender: Peer connection established.');
             }
         } catch (error) {
             console.error('Error parsing received signal:', error);
@@ -124,7 +125,7 @@ export default function Sender() {
 
 
             <Item>
-            <p style={{ fontFamily: 'Trebuchet MS',marginRight:'10px' }} >Browse File</p>
+            <p style={{ fontFamily: 'Trebuchet MS' }} >Browse File</p>
             <Button 
             variant="outlined" 
             component="label" 
@@ -137,10 +138,12 @@ export default function Sender() {
                 onChange={handleFileChange} 
             />
             </Button>
-            {file && <p style={{fontFamily: 'Trebuchet MS', marginLeft: '10px'}}> {file.name}</p>}
+            {file && <p style={{marginLeft: '10px'}}> {file.name}</p>}
             </Item>
 
+            <Item>
             <Button className = 'button-style' onClick={sendFile} variant='outlined'><FileUploadIcon/>Send File</Button>
+            </Item>
             </Stack>
         </Box>
     );
