@@ -16,34 +16,17 @@ File-Transfer is a serverless, peer-to-peer file transfer system developed using
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/your/repository.git`
+1. Clone the repository: `git clone https://github.com/Praneeth003/file-transfer.git`
 2. Install dependencies: `npm install`
 3. Start the development server: `npm run dev`
 
-## Usage
-
-1. Open the application in your browser.
-2. Select the file you want to transfer.
-3. Enter the recipient's details (if applicable).
-4. Start the transfer and monitor the progress.
-5. Once the transfer is complete, you will receive a confirmation message.
 
 ## Screenshots
 
-![Screenshot 1](images/screenshot1.png)
-![Screenshot 2](images/screenshot2.png)
-![Screenshot 3](images/screenshot3.png)
+![Screenshot 1](public/SS1.png)
+![Screenshot 2](public/SS2.png)
+![Screenshot 3](public/SS3.png)
 
 ## Contributing
 
-We welcome contributions from the community to enhance File-Transfer. If you have any ideas, bug fixes, or feature requests, please submit a pull request or open an issue on GitHub.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Thanks to the developers of WebRTC and the simple-peer library for enabling secure peer-to-peer connections.
-- Material UI for providing a great user interface framework.
-- TypeScript and Next.js for their contributions to scalability and efficient front-end development.
+I welcome contributions from the community to enhance File-Transfer. If you have any ideas, bug fixes, or feature requests, please submit a pull request or open an issue on GitHub.
