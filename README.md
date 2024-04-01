@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# File-Transfer
+
+File-Transfer is a serverless, peer-to-peer file transfer system developed using cutting-edge technologies. It allows users to transfer large files between cross-browser environments quickly and securely. In a recent test, it successfully transferred a 1 GB file in just 80 seconds.
+
+## Technologies Used
+
+- **Front End**: Developed using Next.js for a robust and efficient front-end experience.
+- **Scalability**: TypeScript was employed to ensure code scalability and maintainability.
+- **User Interface**: Material UI was chosen for its intuitive and visually appealing user interface design.
+
+## Features
+
+- **Fast Transfer**: Transfers large files quickly between different browser environments.
+- **Secure Connections**: Utilizes WebRTC and the simple-peer library to establish secure, peer-to-peer connections.
+- **User-Friendly**: Offers an intuitive user interface designed with Material UI for ease of use.
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository: `git clone https://github.com/your/repository.git`
+2. Install dependencies: `npm install`
+3. Start the development server: `npm run dev`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Usage
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Open the application in your browser.
+2. Select the file you want to transfer.
+3. Enter the recipient's details (if applicable).
+4. Start the transfer and monitor the progress.
+5. Once the transfer is complete, you will receive a confirmation message.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Screenshots
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+![Screenshot 1](images/screenshot1.png)
+![Screenshot 2](images/screenshot2.png)
+![Screenshot 3](images/screenshot3.png)
 
-## Learn More
+## Contributing
 
-To learn more about Next.js, take a look at the following resources:
+We welcome contributions from the community to enhance File-Transfer. If you have any ideas, bug fixes, or feature requests, please submit a pull request or open an issue on GitHub.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Deploy on Vercel
+## Acknowledgments
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Thanks to the developers of WebRTC and the simple-peer library for enabling secure peer-to-peer connections.
+- Material UI for providing a great user interface framework.
+- TypeScript and Next.js for their contributions to scalability and efficient front-end development.
